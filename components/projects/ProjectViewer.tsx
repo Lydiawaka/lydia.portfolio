@@ -15,7 +15,7 @@ type Props = { project: Project };
 export default function ProjectViewer({ project }: Props) {
   return (
     <div className="project-viewer font-mono text-terminal-green">
-      <div className="divider">────────────────────────────────</div>
+      <div className="divider"></div>
       <div className="project-title">PROJECT: {project.title.toUpperCase()}</div>
       <div>STATUS: {project.status?.toUpperCase() ?? "UNKNOWN"}</div>
       <div className="mt-2">DESCRIPTION:</div>
@@ -27,7 +27,7 @@ export default function ProjectViewer({ project }: Props) {
       <div className="mt-2">LINKS:</div>
       <div>[ LIVE PROJECT ] {project.liveUrl ? project.liveUrl : ""}</div>
       <div>[ SOURCE CODE ] {project.github ? project.github : ""}</div>
-      <div className="divider">────────────────────────────────</div>
+      <div className="divider"></div>
     </div>
   );
 }

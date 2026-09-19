@@ -1,70 +1,50 @@
 import type { TerminalCommand } from "./commandTypes";
 import { siteConfig } from "../../data/siteConfig";
 import { themes, themeOrder } from "../themes/themes";
-
-type Project = {
-  id: string;
-  title: string;
-  description: string;
-  technologies: string[];
-  status?: string;
-  github?: string;
-  liveUrl?: string;
-  featured?: boolean;
-};
-
-const projects: Project[] = [
-  {
-    id: "revmind360",
-    title: "RevMind360 / RevMindC",
-    description:
-      "Healthcare technology platform combining hospital management with revenue-cycle and claims intelligence.",
-    technologies: ["Next.js", "TypeScript", "Node.js", "PostgreSQL"],
-    status: "private",
-    featured: true,
-  },
-  {
-    id: "lejaflow",
-    title: "LejaFlow",
-    description:
-      "Business management and financial ledger platform for SMEs: sales, expenses, inventory, P&L, services, employees, and reports.",
-    technologies: ["React", "TypeScript", "Node.js", "PostgreSQL"],
-    status: "private",
-    featured: true,
-  },
-  {
-    id: "mtaafi",
-    title: "Mtaafi",
-    description: "Wi-Fi/WISP management platform for network operators.",
-    technologies: ["Node.js", "MongoDB"],
-    status: "private",
-  },
-  {
-    id: "wakawears",
-    title: "WakaWears",
-    description: "E-commerce platform showcasing product catalog, cart, and checkout flows.",
-    technologies: ["Next.js", "TypeScript"],
-    status: "private",
-  },
-  {
-    id: "cyberspan",
-    title: "Cyberspan",
-    description: "Cybersecurity platform for vulnerability and incident awareness.",
-    technologies: ["TypeScript", "Docker"],
-    status: "private",
-  },
-];
+import { projects } from "./projectIndex";
 
 const experience = [
   {
-    company: "Madison Group",
-    title: "ICT Intern — IT Support & Systems",
-    period: "2026",
+    company: "Madison Group Limited",
+    title: "ICT Intern",
+    period: "Feb 2026 - Sep 2026",
     responsibilities: [
-      "IT support and troubleshooting",
-      "Systems support and administration",
-      "End-user support and technical operations",
-      "Maintaining technology-related workflows",
+      "Provided first-line ICT support for hardware, software, application, system access, and connectivity issues",
+      "Supported ERP and enterprise business applications, assisting users with navigation, access, and troubleshooting",
+      "Troubleshot technical and application issues, resolved common incidents, and escalated complex issues",
+      "Assisted with API development and integration to support business processes and improve application workflows",
+      "Participated in application testing, debugging, and issue investigation, including working with GeneXus",
+      "Collaborated with ICT staff, developers, and business users to investigate issues and improve application functionality",
+    ],
+  },
+  {
+    company: "Logpagia Technologies LLC",
+    title: "Software Developer",
+    period: "2025 - 2026",
+    responsibilities: [
+      "Collaborated with developers to design, develop, test, and maintain enterprise software applications",
+      "Contributed to an AI-powered enterprise platform supporting workforce management, finance, inventory, and analytics",
+      "Developed and maintained frontend/backend features involving APIs, databases, authentication, and business workflows",
+      "Conducted functional and black-box testing, documented defects, and supported debugging and issue resolution",
+      "Supported testing and validation of healthcare and revenue-cycle management software across different user roles",
+    ],
+  },
+  {
+    company: "Ndifin",
+    title: "Web Developer",
+    period: "2024 - 2025",
+    responsibilities: [
+      "Developed and deployed scalable full-stack applications with authentication systems, dashboards, and e-commerce features",
+      "Collaborated with teams to deliver customized client solutions",
+    ],
+  },
+  {
+    company: "Jimali Ventures",
+    title: "Intern",
+    period: "2024",
+    responsibilities: [
+      "Assisted in building and maintaining full-stack applications using Django and React",
+      "Worked on debugging, API integration, and internal tool improvements",
     ],
   },
 ];
@@ -73,17 +53,23 @@ const education = [
   {
     degree: "Bachelor of Economics",
     institution: "University of Nairobi",
-    period: "2021 — 2025",
+    period: "2021 - 2025",
   },
 ];
 
 const certifications = [
-  { name: "Oracle Data Science Associate", status: "Status: not provided" },
-  { name: "IBM SkillsBuild Cybersecurity Certificate", status: "Status: not provided" },
+  { name: "Relational Databases", status: "FreeCodeCamp" },
+  { name: "Full-Stack Development", status: "FreeCodeCamp" },
+  { name: "Python", status: "FreeCodeCamp" },
+  { name: "JavaScript & TypeScript Advanced", status: "Udemy" },
+  { name: "Responsive Web Design", status: "FreeCodeCamp" },
+  { name: "AI Foundations Associate", status: "Oracle University" },
+  { name: "ITSM Foundation Training", status: "Completed" },
+  { name: "IT Support Technical Skills Bootcamp", status: "Completed" },
 ];
 
 const baseIntro = [
-  "Lydia Nduati — Software Developer | IT Support & Systems",
+  "Lydia Nduati — Software Developer",
   "Nairobi, Kenya",
   "",
 ];
@@ -91,9 +77,14 @@ const baseIntro = [
 function formatProjectList(): string[] {
   const out: string[] = ["Projects:", ""];
   projects.forEach((p, i) => {
-    out.push(`${i + 1}. ${p.title} — ${p.description}`);
+    out.push(`${i + 1}. ${p.title}: ${p.description}`);
+    out.push(`   Tech: ${p.technologies.join(", ")}`);
+    out.push(`   Status: ${p.status ?? "unknown"}`);
+    if (p.github) out.push(`   GitHub: ${p.github}`);
+    if (p.liveUrl) out.push(`   Live: ${p.liveUrl}`);
+    out.push("");
   });
-  out.push("", "Use 'projects <number>' to view details for a project.");
+  out.push("Use 'projects <number>' to view details for a project.");
   return out;
 }
 
@@ -115,17 +106,14 @@ function formatProjectDetail(index: number): string[] {
 }
 
 function deriveSkills(): Record<string, string[]> {
-  // derive from projects + known stack
-  const techSet = new Set<string>(["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js", "PostgreSQL", "MongoDB", "Docker"]);
-  // ensure we also include project-specific ones
-  projects.forEach((p) => p.technologies.forEach((t) => techSet.add(t)));
-
   return {
-    Frontend: ["Next.js", "React", "TypeScript", "JavaScript", "Tailwind CSS"].filter((t) => techSet.has(t)),
-    Backend: ["Node.js", "Express.js", "Django", "FastAPI"].filter((t) => techSet.has(t)),
-    Databases: ["PostgreSQL", "Prisma", "MySQL", "MongoDB"].filter((t) => techSet.has(t)),
-    Tools: ["Git", "GitHub", "Vercel", "Docker", "REST APIs"].filter((t) => techSet.has(t) || ["Git", "GitHub", "Vercel", "REST APIs"].includes(t)),
-    "IT & Systems": ["IT Support", "System Administration", "Troubleshooting", "Network Fundamentals"],
+    Languages: ["Java", "Python", "JavaScript", "TypeScript", "PHP", "SQL"],
+    Frontend: ["HTML", "CSS", "React.js", "Next.js"],
+    Backend: ["Node.js", "Express.js", "Django", "FastAPI"],
+    Databases: ["MongoDB", "Mongoose", "PostgreSQL", "MySQL"],
+    "Tools & Technologies": ["Git", "GitHub", "Genexus", "Docker", "AWS", "Vercel", "Render", "Prisma ORM"],
+    "APIs & Auth": ["REST APIs", "GraphQL", "JWT", "OAuth", "WebSockets"],
+    Other: ["CI/CD", "Postman", "Figma"],
   };
 }
 
@@ -209,9 +197,10 @@ export const commands: TerminalCommand[] = [
       return [
         ...baseIntro,
         "",
-        "Software developer experienced building web applications with TypeScript, React, and Next.js.",
-        "Background in IT support and systems administration with hands-on troubleshooting and operational automation.",
-        "Focused on business systems and fintech solutions that deliver practical product outcomes.",
+        "Full-Stack Software Developer experienced designing, developing, testing, and deploying applications",
+        "using Java, TypeScript, JavaScript, Python, React, Next.js, Node.js, Django, and FastAPI.",
+        "Proficient in REST APIs, SQL and NoSQL databases, cloud deployment, authentication systems, and ERP integration.",
+        "Dedicated to building scalable, secure, and user-friendly solutions.",
       ];
     },
   },
@@ -223,18 +212,17 @@ export const commands: TerminalCommand[] = [
       return [
         "LYDIA  NDUATI",
         "",
-        "Software Developer | IT Support & Systems",
+        "Software Developer",
         "",
         "Location:",
         "Nairobi, Kenya",
         "",
         "Focus:",
-        "Web Applications",
-        "Business Systems",
-        "Healthcare Technology",
-        "Revenue Cycle Management",
+        "Full-Stack Applications",
+        "ERP & Business Systems",
+        "AI-Powered Enterprise Platforms",
+        "REST APIs & Authentication",
         "IT Support & Systems",
-        "Cybersecurity",
         "",
         "Currently building practical technology solutions",
         "that solve real business problems.",
@@ -374,7 +362,6 @@ export const commands: TerminalCommand[] = [
     description: "Show brief system-like info",
     execute: () => [
       "LYDIA@PORTFOLIO",
-      "──────────────────────",
       "OS: PortfolioOS",
       "Shell: lydia-shell",
       "Theme: Green CRT",
@@ -395,7 +382,7 @@ export const commands: TerminalCommand[] = [
   {
     name: "coffee",
     description: "Coffee status",
-    execute: () => ["☕ Coffee status: brewing... stay tuned."],
+    execute: () => ["Coffee status: brewing... stay tuned."],
   },
   {
     name: "gaming",

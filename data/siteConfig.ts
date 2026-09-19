@@ -1,9 +1,9 @@
 export const siteConfig = {
   name: "Lydia Wakarindi Nduati",
-  title: "Software Developer | IT Support & Systems",
+  title: "Software Developer",
   location: "Nairobi, Kenya",
-  email: "",
-  github: "",
+  email: "lydianduati66@gmail.com",
+  github: "https://github.com/lydiawaka",
   linkedin: "",
   twitter: "",
   resume: "/resume.pdf",

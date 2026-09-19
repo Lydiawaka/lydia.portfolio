@@ -130,7 +130,7 @@ export default function Terminal() {
             <div>
               {lines.map((l, idx) => {
                 const projectMatch = l.match(/__PROJECT__:(\w+)/);
-                const downloadMatch = l.match(/\[ DOWNLOAD PDF \ ]\s*(\S+)/i);
+                const downloadMatch = l.match(/\[ DOWNLOAD PDF \]\s*(\S+)/i);
                 const urlMatch = l.match(/https?:\/\/\S+/i);
                 if (projectMatch) {
                   const id = projectMatch[1];
@@ -142,7 +142,7 @@ export default function Terminal() {
                   const url = downloadMatch[1];
                   return (
                     <div key={idx} className="terminal-line">
-                      <a href={url} target="_blank" rel="noreferrer" className="text-terminal-green underline">
+                      <a href={url} download rel="noreferrer" className="text-terminal-green underline">
                         [ DOWNLOAD PDF ]
                       </a>
                     </div>
